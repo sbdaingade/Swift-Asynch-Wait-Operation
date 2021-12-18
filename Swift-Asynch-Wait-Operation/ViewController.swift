@@ -29,6 +29,21 @@ class ViewController: UIViewController, UITableViewDataSource {
         tableView.frame = view.bounds
         tableView.dataSource = self
         
+        /*
+         async {
+             let result = await fetchUsers()
+             switch result {
+             case .success(let users):
+                 self.users = users
+                 DispatchQueue.main.async {
+                     self.tableView.reloadData()
+                 }
+             case .failure(let error):
+                 print("Error: \(error.localizedDescription)")
+             }
+         }
+         */
+        
         fetchUsers { result in
             switch result {
             case .success(let newUsers):
@@ -66,19 +81,23 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     //MARK: Note xcode 13 required
     
-    //    private func fetchUsers() async -> Result<[User],Error> {
-    //    guard let url = url else {
-    //    return .failure(UserError.failToFetchResult)
-    //    }
-    //    do {
-    //    let (data,_) = try await URLSession.shared.data(from:url)
-    //    let users = try JSONDecoder().decode([User].self, from: data)
-    //    return .success(users)
-    //    } catch {
-    //    return .failure(UserError.failToFetchResult)
-    //    }
-    //    }
-    //
+
+     /*
+    
+     private func fetchUsers() async -> Result<[User],Error> {
+             guard let url = url else {
+                 return .failure(MyError.failToGetUsers)
+             }
+             do {
+                 let (data, _) = try await URLSession.shared.data(from: url)
+                 let users = try JSONDecoder().decode([User].self, from: data)
+                 return .success(users)
+             }catch {
+                 return .failure(MyError.failToGetUsers)
+             }
+         }
+
+     */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
